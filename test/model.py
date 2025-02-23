@@ -22,6 +22,28 @@ query = """
 result = query(schema, query)
 
 # TODO: Convert the result from GROQ data into a PyTorch dataset
+
+#Hate Speech Pytorch Dataset
+class HateSpeechDataset(Dataset):
+    def __init__(self, data):
+        self.data = data
+
+    def __len__(self):
+        return len(self.data)
+    
+    def __getitem__(self, idx):
+        return self.data[idx]
+    
+    @property
+    #helps find class names
+    def classes(self):
+        return self.data.classes
+    
+    
+dataset = HateSpeechDataset(data_dir='/workspaces/haimaidataorbit2025/test/HateSpeechData')
+
+len(dataset)
+
 # Convert the result to a PyTorch dataset
 class UserDataset(Dataset):
     def __init__(self, data):
@@ -38,7 +60,7 @@ class UserDataset(Dataset):
             'email': user['email']
         }
 
-dataset = UserDataset(result.data.users) 
+#dataset = UserDataset(result.data.users) 
 
 
 # TODO: Create a PyTorch DataLoader from the dataset
