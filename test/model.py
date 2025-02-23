@@ -7,6 +7,7 @@ import torch.optim as optim
 import os
 import glob
 import pickle
+import csv
 
 class TextClassifier(nn.Module):
     def __init__(self, input_dim):
@@ -76,7 +77,7 @@ else:
     vectorizer = TfidfVectorizer(max_features=1000)
     vectorizer.fit(df['text'])  # Fit on text data
 
-    # Transform text data using vectorizer (moved critical variables X_tensor, Y_tensor, and model outside of if train_model so they always initialize)
+# Transform text data using vectorizer (moved critical variables X_tensor, Y_tensor, and model outside of if train_model so they always initialize)
 X = vectorizer.transform(df['text']).toarray()
 X_tensor = torch.tensor(X, dtype=torch.float32)
 y_tensor = torch.tensor(df['label'].values, dtype=torch.float32).unsqueeze(1)
@@ -94,7 +95,8 @@ else:
     model = TextClassifier(input_dim=X.shape[1])  # Initialize model
     train_model = True
 
-# Vectorize text data IF training_model = false
+#TODO: Modify Training Code ot Include Corrections
+#IF training_model = false
 if train_model:
     print("🚀 Starting model training...")
 
@@ -147,6 +149,7 @@ if train_model:
 else:
     print("🚀 Using pre-trained model for predictions.")
 
+#TODO: Modify Evaluation Code to Allow Manual Corrections (See ChatGPT)
 # Evaluation (Accuracy)
 model.eval()
 with torch.no_grad():
