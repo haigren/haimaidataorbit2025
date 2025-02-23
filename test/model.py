@@ -1,4 +1,3 @@
-import pandas as pd
 import torch
 from sklearn.feature_extraction.text import TfidfVectorizer
 from torch.utils.data import Dataset, DataLoader
@@ -8,6 +7,7 @@ import os
 import glob
 import pickle
 import csv
+import pandas as pd
 
 class TextClassifier(nn.Module):
     def __init__(self, input_dim):
@@ -26,7 +26,7 @@ MODEL_PATH = "/workspaces/haimaidataorbit2025/test/saved_models/model.pth"
 VECTORIZER_PATH = "/workspaces/haimaidataorbit2025/test/saved_models/vectorizer.pkl"
 
 # Concatenate all datasets into one and load dataset
-csv_files = glob.glob("/workspaces/haimaidataorbit2025/test/HateSpeechData/*.csv")  # Adjust the path as needed
+csv_files = glob.glob("HateSpeechData/*.csv")  # Adjust the path as needed
 #print("Found CSV files:", csv_files)
 
 #if not csv_files:
@@ -45,8 +45,6 @@ for file in csv_files:
 
     df_list.append(temp_df)
 
-df = pd.concat(df_list, ignore_index=True)
-
 # Load all CSVs into a list of DataFrames
 df_list = [pd.read_csv(file) for file in csv_files]
 
@@ -54,16 +52,11 @@ df_list = [pd.read_csv(file) for file in csv_files]
 df = pd.concat(df_list, ignore_index=True)
 
 # Load your CSV
-#df = pd.read_csv('HateSpeechData/data1.csv')
-
-# Check the first few rows
-#print(df.head())
-#print(f"Total records: {len(df)}")
 
 df['text'] = df['text'].fillna("")  # Fill empty text with ""
 
 # Convert boolean labels to 0/1
-df['label'] = df['label'].map({'hate': True, 'nothate': False})
+df['label'] = df['label'].map({'hate': True, 'nothate': False, "1" : True, "0": False})
 
 df['label'] = df['label'].fillna(0).astype(int)
 
@@ -139,10 +132,10 @@ if train_model:
         print(f"Epoch {epoch+1}/{epochs}, Loss: {total_loss:.4f}")
 
     # Save trained model
-    torch.save(model.state_dict(), "/workspaces/haimaidataorbit2025/test/saved_models/model.pth")
+    torch.save(model.state_dict(), "saved_models/model.pth")
 
     # Save vectorizer
-    with open("/workspaces/haimaidataorbit2025/test/saved_models/vectorizer.pkl", "wb") as f:
+    with open("saved_models/vectorizer.pkl", "wb") as f:
         pickle.dump(vectorizer, f)
 
     print("✅ Model and vectorizer saved successfully!")
@@ -158,8 +151,8 @@ with torch.no_grad():
     accuracy = (predictions == y_tensor).float().mean()
     print(f"Accuracy: {accuracy.item() * 100:.2f}%")
 
-# Assuming 'vectorizer' is the TfidfVectorizer used during training
-new_text = ["you suck loserrrr"]
+# Assuming 'vectorizer' is the Vectorizer used during training
+new_text = ["hello my name is mai and i would like to be your friend"]
 new_text_vectorized = vectorizer.transform(new_text).toarray()
 new_text_tensor = torch.tensor(new_text_vectorized, dtype=torch.float32)
 model.eval()  # Set the model to evaluation mode
