@@ -8,18 +8,7 @@ import glob
 import pickle
 import csv
 import pandas as pd
-
-class TextClassifier(nn.Module):
-    def __init__(self, input_dim):
-        super(TextClassifier, self).__init__()
-        self.fc1 = nn.Linear(input_dim, 128)
-        self.relu = nn.ReLU()
-        self.fc2 = nn.Linear(128, 1)  # Single output neuron for binary classification
-
-    def forward(self, x):
-        x = self.relu(self.fc1(x))
-        x = self.fc2(x)
-        return x  # BCEWithLogitsLoss will apply sigmoid internally
+from textClassifier import TextClassifier
 
 #paths for saving and loading
 MODEL_PATH = "/workspaces/haimaidataorbit2025/test/saved_models/model.pth"

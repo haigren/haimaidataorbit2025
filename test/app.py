@@ -1,6 +1,9 @@
 from flask import Flask, render_template, jsonify, request
+from llm import Groq_llm
 
 app = Flask(__name__)
+
+groq = Groq_llm()
 
 @app.route('/')
 def home():
@@ -10,7 +13,8 @@ def home():
 def get_message():
     data = request.json
     name = data.get('name', 'World')
-    return jsonify({"message": f"Hello, {name}! Welcome to your Python-powered web app 🚀"})
+    new_message = groq.messageChecker(name)
+    return jsonify({"message": f"{new_message}"})
 
 if __name__ == '__main__':
     app.run(debug=True)
