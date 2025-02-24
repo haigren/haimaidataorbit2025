@@ -1,0 +1,78 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000000;
+    background: linear-gradient(rgba(128, 128, 128, 0.5), rgba(128, 128, 128, 0.5)), 
+              url('https://cdn.discordapp.com/attachments/1342989606382997688/1343345324017844254/image.png?ex=67bcef53&is=67bb9dd3&hm=89e08240dab45dc7fea0f0c006d4df8a096a8f73b9f912774a7231c29c0cfbac&'); /* Replace with your image path */
+    background-size: cover; /* Ensures the image covers the entire page */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+}
+
+.container {
+    color: rgba(128,128,128, 1);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -90%); /* Moves it slightly up and left */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(0, 0, 0);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between; /* Pushes items to opposite sides */
+    align-items: center; /* Aligns them vertically */
+    width: 100%; /* Ensures it spans the full width of the container */
+    padding: 10px 20px; /* Adds spacing inside the header */
+    font-size: 20px; /* Adjusts text size */
+    font-weight: bold; /* Makes text bold */
+}
+
+.left-text {
+    text-align: left;
+}
+
+.right-text {
+    text-align: right;
+    color: rgb(57,133,185); /* Change to your desired color */
+}
+
+#nameInput {
+    width: 100%; /* Ensure it fits within the container */
+    max-width: 100%; /* Prevent overflow */
+    height: 100px; /* Adjust height for multi-line input */
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: vertical; /* Allows vertical resizing */
+    box-sizing: border-box; /* Ensures padding is included in width/height */
+}
+
+.image-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: block; /* Ensures it's on a new line */
+    margin: 10px auto; /* Centers the button */
+}
+
+.image-button img {
+    display: block; /* Prevents extra spacing */
+    max-width: 100%; /* Ensures it doesn't overflow */
+    height: auto; /* Maintains original aspect ratio */
+}
+
+button:hover {
+    background-color: #000000;
+}

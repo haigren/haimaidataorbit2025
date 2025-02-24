@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Python Quick Prototype</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <span class="left-text">✖</span>
+            <span class="right-text">Draft</span>
+        </div>
+        <textarea id="nameInput" placeholder="post"></textarea>
+        <br>
+        <button class="image-button" onclick="sendMessage()">
+            <img src="https://cdn.discordapp.com/attachments/1342989606382997688/1343367328032751677/image.png?ex=67bd03d1&is=67bbb251&hm=39a1bc7ac218dbbc12a98d0442714e7aaaf465d8577c066ade52dbebb01295d1&" alt="Submit">
+        </button>
+        <p id="response"></p>
+    </div>
+
+    <script>
+    async function sendMessage() {
+    const nameInput = document.getElementById("nameInput");
+    const name = nameInput.value;
+
+    const response = await fetch('/api/message', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name })
+    });
+
+    const data = await response.json();
+    const newMessage = data.message;
+
+    // Update the input box with the new message
+    nameInput.value = newMessage;
+
+    const responseElement = document.getElementById("response");
+
+    // Only show the warning if the message has changed
+    if (newMessage !== name) {
+
+
+        // Set the warning message
+        const warningText = "Your post does not comply with our TOS and has been rewritten!"; // Customize as needed
+        responseElement.innerText = warningText;
+
+        // Style the warning message
+        responseElement.style.color = "red";
+        responseElement.style.fontWeight = "bold";
+    } else {
+        // Show positive message if the text remains the same
+        const positiveText = "Posted Successfully"; // Customize as needed
+        responseElement.innerText = positiveText;
+        responseElement.style.color = rgb(57,133,185);  // Green for positive message
+        responseElement.style.fontWeight = "normal"; // Normal weight for positive
+    }
+}
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
