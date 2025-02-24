@@ -19,7 +19,7 @@ csv_files = glob.glob("HateSpeechData/*.csv")  # Adjust the path as needed
 #print("Found CSV files:", csv_files)
 
 #if not csv_files:
-#    print("❌ No CSV files found! Check your directory path.")
+print("❌ No CSV files found! Check your directory path.")
 
 required_columns = ['text','label']
 df_list = []
